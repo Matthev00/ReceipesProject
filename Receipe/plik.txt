@@ -1,0 +1,34 @@
+5
+Pancake 25 7:
+flour 200 g
+milk 250 ml
+egg 3 pieces
+yogurt 3 spoons
+suger 2 spoons
+baking_soda 3 g
+oil 3 spoons
+
+Bannana_Pancake 25 3:
+banana 3 pieces
+egg 3 pieces
+protein 100 g
+
+Pesto_pasta 30 6:
+pasta 500 g
+pesto 125 g
+chicken 500 g
+olives 100 g
+salt 5 g
+pepper 5 g
+
+BBQ_Pasta 30 4:
+pasta 500 g
+chicken 500 g
+BBQ_souce 200 g
+corn 300 g
+
+Toast 10 4:
+bread 2 pieces
+cheese 2 pieces
+ham 1 piece
+souce 21 g
