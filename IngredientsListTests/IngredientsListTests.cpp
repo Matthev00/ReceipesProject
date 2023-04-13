@@ -3,6 +3,8 @@
 #include "../Receipe/Ingredient.cpp"
 #include "../Receipe/IngredientsList.h"
 #include "../Receipe/IngredientsList.cpp"
+#include "../Receipe/DishWeight.h"
+#include "../Receipe/DishWeight.cpp"
 #include <string>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -30,7 +32,8 @@ namespace IngredientLIstTests
 			ingredients.push_back(i1);
 			ingredients.push_back(i2);
 			IngredientsList ingredient_list(ingredients);
-			Assert::AreEqual(unsigned int(30), ingredient_list.count_dish_weight());
+			DishWeight dw(30);
+			Assert::AreEqual(true, dw==ingredient_list.count_dish_weight());
 		}
 		
 		TEST_METHOD(get_ingredient_typical)
@@ -78,7 +81,8 @@ namespace IngredientLIstTests
 			vector<Ingredient> ingredients;
 			IngredientsList ingredient_list(ingredients);
 			Assert::AreEqual(unsigned int(0), ingredient_list.count_number_of_ingredients());
-			Assert::AreEqual(unsigned int(0), ingredient_list.count_dish_weight());
+			DishWeight dw(0);
+			Assert::AreEqual(true, dw==ingredient_list.count_dish_weight());
 		}
 
 		TEST_METHOD(add_ingredient)
@@ -223,6 +227,50 @@ namespace IngredientLIstTests
 			{
 				Assert::AreEqual("Invalid unit!", x);
 			}
+		}
+		TEST_METHOD(iterator_for_each_Ingredient_typical)
+		{
+			Ingredient i1(std::string("salt"), 15, std::string("g"));
+			Ingredient i2(std::string("milk"), 50, std::string("ml"));
+			Ingredient i3(std::string("suger"), 15, std::string("g"));
+			Ingredient i4(std::string("water"), 15, std::string("ml"));
+			Ingredient i5(std::string("suger"), 15, std::string("g"));
+			vector<Ingredient> ingredients;
+			ingredients.push_back(i1);
+			IngredientsList ingredient_list(ingredients);
+			ingredient_list += i2;
+			ingredient_list += i3;
+			ingredient_list += i4;
+			ingredient_list += i5;
+			ingredient_list.set_iterator_unit("ml");
+			int counter = 0;
+			for (auto& ingredient : ingredient_list)
+			{
+				counter++;
+			}
+			Assert::AreEqual(2, counter);
+		}
+		TEST_METHOD(iterator_for_each_Ingredient_first_and_last)
+		{
+			Ingredient i1(std::string("salt"), 15, std::string("g"));
+			Ingredient i2(std::string("milk"), 50, std::string("ml"));
+			Ingredient i3(std::string("suger"), 15, std::string("g"));
+			Ingredient i4(std::string("water"), 15, std::string("ml"));
+			Ingredient i5(std::string("suger"), 15, std::string("g"));
+			vector<Ingredient> ingredients;
+			ingredients.push_back(i1);
+			IngredientsList ingredient_list(ingredients);
+			ingredient_list += i2;
+			ingredient_list += i3;
+			ingredient_list += i4;
+			ingredient_list += i5;
+			ingredient_list.set_iterator_unit("g");
+			int counter = 0;
+			for (auto& ingredient : ingredient_list)
+			{
+				counter++;
+			}
+			Assert::AreEqual(3, counter);
 		}
 	};
 }

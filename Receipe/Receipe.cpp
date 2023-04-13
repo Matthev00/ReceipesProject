@@ -40,7 +40,7 @@ void Receipe::set_preparation_time(short new_preparation_time)
     preparation_time = new_preparation_time;
 }
 
-unsigned int Receipe::count_dish_weight()const
+DishWeight Receipe::count_dish_weight()const
 {
     return ingredients.count_dish_weight();
 }

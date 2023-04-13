@@ -2,6 +2,7 @@
 #include "Ingredient.h"
 #include "Receipe.h"
 #include "IngredientsList.h"
+#include "DishWeight.h"
 #include <string>
 #include <fstream>
 #include <cstdio>
@@ -10,6 +11,21 @@ using namespace std;
 
 int main(int ac, char *av[])
 {
+	//Przyk³ad U¿ycia iteratora w for zakresowy
+	Ingredient i1(std::string("salt"), 15, std::string("g"));
+	Ingredient i2(std::string("milk"), 50, std::string("ml"));
+	Ingredient i3(std::string("suger"), 15, std::string("g"));
+	vector<Ingredient> ingredients;
+	ingredients.push_back(i1);
+	IngredientsList ingredient_list(ingredients);
+	ingredient_list += i2;
+	ingredient_list += i3;
+	ingredient_list.set_iterator_unit("ml");
+	for (auto& ingredient : ingredient_list)
+	{
+		cout << ingredient.get_name() << endl;
+	}
+	cout << "-----------------------------------------" << endl;
 	short n;
 	vector<Receipe> receipes = vector<Receipe>();
 	if (ac == 3) {

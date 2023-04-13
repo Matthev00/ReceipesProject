@@ -19,5 +19,5 @@ public:
 	std::string info()const;
 	friend std::ostream& operator<<(std::ostream& output, const Ingredient& i);
 	friend std::istream& operator>>(std::istream& input, Ingredient& i);
-	bool operator==(Ingredient)const;
+	bool operator==(const Ingredient&)const;
 };

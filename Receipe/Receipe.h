@@ -18,7 +18,7 @@ public:
 	void set_name(std::string);
 	unsigned short get_preparation_time()const;
 	void set_preparation_time(short);
-	unsigned int count_dish_weight()const;
+	DishWeight count_dish_weight()const;
 	unsigned int count_number_of_ingredients()const;
 	void add_ingredient(Ingredient);
 	void save_to_file(std::string)const;

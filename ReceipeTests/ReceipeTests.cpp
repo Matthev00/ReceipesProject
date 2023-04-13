@@ -5,6 +5,8 @@
 #include "../Receipe/Ingredient.cpp"
 #include "../Receipe/IngredientsList.h"
 #include "../Receipe/IngredientsList.cpp"
+#include "../Receipe/DishWeight.h"
+#include "../Receipe/DishWeight.cpp"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -84,14 +86,16 @@ namespace ReceipeTests
 			Receipe receipe("przepis", 35, ingredients_list);
 			Assert::AreEqual(string("przepis"), receipe.get_name());
 			Assert::AreEqual(unsigned short(35), receipe.get_preparation_time());
-			Assert::AreEqual(unsigned int(500), receipe.count_dish_weight());
+			DishWeight dw(500);
+			Assert::AreEqual(true, dw==receipe.count_dish_weight());
 		}
 		TEST_METHOD(count_dish_weight_empty_ingredients)
 		{
 			Receipe receipe("przepis", 35);
 			Assert::AreEqual(string("przepis"), receipe.get_name());
 			Assert::AreEqual(unsigned short(35), receipe.get_preparation_time());
-			Assert::AreEqual(unsigned int(0), receipe.count_dish_weight());
+			DishWeight dw(0);
+			Assert::AreEqual(true, dw==receipe.count_dish_weight());
 		}
 		TEST_METHOD(count_number_of_ingredients_typical)
 		{
@@ -126,10 +130,12 @@ namespace ReceipeTests
 			IngredientsList ingredients_list(ingredients);
 			Receipe receipe("przepis", 35, ingredients_list);
 			Assert::AreEqual(unsigned int(1), receipe.count_number_of_ingredients());
-			Assert::AreEqual(unsigned int(75), receipe.count_dish_weight());
+			DishWeight dw(75);
+			Assert::AreEqual(true, dw==receipe.count_dish_weight());
 			receipe.add_ingredient(ingredient1);
 			Assert::AreEqual(unsigned int(2), receipe.count_number_of_ingredients());
-			Assert::AreEqual(unsigned int(150), receipe.count_dish_weight());
+			dw.set_amount(150);
+			Assert::AreEqual(true, dw==receipe.count_dish_weight());
 		}
 	};
 }

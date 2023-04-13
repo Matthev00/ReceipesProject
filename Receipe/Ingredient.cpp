@@ -81,7 +81,7 @@ string Ingredient::info() const
 	return info;
 }
 
-bool Ingredient::operator==(Ingredient i)const
+bool Ingredient::operator==(const Ingredient& i)const
 {
 	if (name == i.name &&
 		unit == i.unit &&

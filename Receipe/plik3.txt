@@ -1,0 +1,3 @@
+Number of Ingredients in the list 2:
+15 g of salt
+15 g of sugar

@@ -8,6 +8,16 @@ IngredientsList::IngredientsList(std::vector<Ingredient> ingredients)
 	IngredientsList::ingredients = ingredients;
 }
 
+std::string IngredientsList::get_iterator_unit() const
+{
+    return iterator_unit;
+}
+
+void IngredientsList::set_iterator_unit(const std::string& iterator_unit)
+{
+    IngredientsList::iterator_unit = iterator_unit;
+}
+
 std::vector<Ingredient> IngredientsList::get_ingredients() const
 {
     return ingredients;
@@ -21,14 +31,14 @@ Ingredient IngredientsList::get_ingredient(unsigned int position) const
     return ingredients[position];
 }
 
-unsigned int IngredientsList::count_dish_weight() const
+DishWeight IngredientsList::count_dish_weight() const
 {
     int dish_weight = 0;
     for (int i = 0; i < ingredients.size(); ++i)
     {
         dish_weight += ingredients[i].count_mass();
     }
-    return dish_weight;
+    return DishWeight(dish_weight);
 }
 
 unsigned int IngredientsList::count_number_of_ingredients() const
@@ -36,7 +46,7 @@ unsigned int IngredientsList::count_number_of_ingredients() const
     return ingredients.size();
 }
 
-void IngredientsList::add_ingredient(Ingredient& ingredient)
+void IngredientsList::add_ingredient(const Ingredient& ingredient)
 {
     ingredients.push_back(ingredient);
 }
@@ -90,7 +100,7 @@ void IngredientsList::read_from_file(std::string file_name)
     in.close();
 }
 
-void IngredientsList::operator+=(Ingredient& ingredient)
+void IngredientsList::operator+=(const Ingredient& ingredient)
 {
     ingredients.push_back(ingredient);
 }
@@ -106,7 +116,7 @@ std::ostream& IngredientsList::print_nice(std::ostream& output, const Ingredient
     return output;
 }
 
-void IngredientsList::operator-=(Ingredient& ingredient)
+void IngredientsList::operator-=(const Ingredient& ingredient)
 {
     for (int i = 0; i < ingredients.size(); ++i)
     {
@@ -116,7 +126,7 @@ void IngredientsList::operator-=(Ingredient& ingredient)
     }
 }
 
-void IngredientsList::operator-=(std::string ingredient)
+void IngredientsList::operator-=(const std::string& ingredient)
 {
     for (int i = 0; i < ingredients.size(); ++i)
     {
@@ -126,19 +136,19 @@ void IngredientsList::operator-=(std::string ingredient)
     }
 }
 
-IngredientsList IngredientsList::operator+(IngredientsList ingredient_list_to_add)
+IngredientsList IngredientsList::operator+(const IngredientsList ingredient_list_to_add)
 {
     return *this + ingredient_list_to_add.ingredients;
 }
 
-void IngredientsList::operator+=(std::vector<Ingredient>& ingredients_to_add)
+void IngredientsList::operator+=(const std::vector<Ingredient>& ingredients_to_add)
 {
     ingredients.insert(ingredients.end(),
         ingredients_to_add.begin(),
         ingredients_to_add.end());
 }
 
-void IngredientsList::operator+=(IngredientsList& ingredient_list_to_add)
+void IngredientsList::operator+=(const IngredientsList& ingredient_list_to_add)
 {
     *this += ingredient_list_to_add.ingredients;
 }
@@ -172,7 +182,7 @@ std::istream& operator>>(std::istream& input, IngredientsList& il)
     return input;
 }
 
-IngredientsListIterator IngredientsList::begin(std::string unit) 
+IngredientsListIterator IngredientsList::begin(const std::string& unit) 
 {
     if (unit != "g" && unit != "ml" && unit != "spoons" && unit != "pieces"){
         throw "Invalid unit!";
@@ -183,6 +193,16 @@ IngredientsListIterator IngredientsList::begin(std::string unit)
         ++it;
     }
     return IngredientsListIterator(it, end, unit);
+}
+
+IngredientsListIterator IngredientsList::begin()
+{
+    auto it = ingredients.begin();
+    auto end = ingredients.end();
+    while (it != end && it->get_unit() != this->get_iterator_unit()) {
+        ++it;
+    }
+    return IngredientsListIterator(it, end, this->get_iterator_unit());
 }
 
 IngredientsListIterator IngredientsList::end() 
@@ -209,7 +229,7 @@ Ingredient& IngredientsListIterator::operator*() const
 
 IngredientsListIterator& IngredientsListIterator::operator++()
 {
-    do 
+    do
     {
         ++it;
     } while (it != end && it->get_unit() != unit);
